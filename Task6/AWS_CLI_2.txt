@@ -1,0 +1,37 @@
+All Commands
+
+#Creating key Pair
+aws ec2 create-key-pair --key-name newpass
+
+
+#Creating Security-group  
+aws ec2 create-security-group --group-name newSecurityGroup --description "Demo" --vpc-id vpc-1f9b7d74
+
+
+#Assigning ingress rule to security-group
+aws ec2 authorize-security-group-ingress --group-name newSecurityGroup --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name newSecurityGroup --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+
+#Creating S3 bucket
+aws s3api create-bucket --bucket newfileforu3 --region ap-south-1 --ac public-read --create-bucket-configuration LocationConstraint=ap-south-1
+
+
+#Uploading file to S3 buccket
+aws s3 cp "C:\Users\Ashish Kumar\Desktop\cheems1.jpg" s3://newfileforu3/file1.jpg --ac public-read
+
+
+#For Launching an instance using CLI
+aws ec2 run-instances --image-id  ami-0e306788ff2473ccb --instance-type  t2.micro --security-group-ids sg-0bfb6de91e2bb4fd4 --subnet-id subnet-b94d42d1 --count 1 --key-name newpass --user-data=file://file_script.txt
+
+
+#Command for creating EBS volume 
+aws ec2 create-volume --size 1 --volume-type gp2 --availability-zone ap-south-1a 
+
+
+#Command for Attaching EBS volume to Running instance
+aws ec2 attach-volume --volume-id vol-0cac2258ddb2ab3dc  --instance-id i-0a739233c1373b919 --device /dev/sdf
+
+
+#Creating CloudFromt Distribution
+aws cloudfront create-distribution --origin-domain-name ec2-13-235-248-135.ap-south-1.compute.amazonaws.com
